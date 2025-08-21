@@ -1,0 +1,41 @@
+# Run: llamafactory-cli train /root/dev/finance/train_qwen3_fullpt.yaml
+stage: pt
+do_train: true
+finetuning_type: full          # <<< FULL PARAM TRAINING (no LoRA)
+
+# --- Model ---
+model_name_or_path: "Qwen/Qwen3-0.6B"
+trust_remote_code: true
+flash_attn: auto
+
+# --- Data ---
+dataset_dir: data
+dataset: my_corpus             # via data/dataset_info.json (prompt->text)
+cutoff_len: 4096
+packing: true
+preprocessing_num_workers: 8
+val_size: 0.02
+
+# --- Training ---
+output_dir: /root/dev/finance/output_models/qwen3-0.6b-fullpt
+report_to: tensorboard
+per_device_train_batch_size: 6   # start high on purpose
+# auto_find_batch_size: true
+gradient_accumulation_steps: 16
+num_train_epochs: 10           # or use max_steps: 160 as we computed
+learning_rate: 2.0e-4
+weight_decay: 0.1
+warmup_ratio: 0.05
+lr_scheduler_type: cosine
+bf16: true                     # set bf16:false & fp16:true if needed
+gradient_checkpointing: true
+logging_steps: 10
+save_steps: 160
+save_total_limit: 3
+save_safetensors: true
+overwrite_output_dir: true
+load_best_model_at_end: false
+
+# No: resume_from_checkpoint
+# No: lora_r / lora_alpha / lora_dropout / lora_target / peft_type ...
+# Optional: deepspeed: /root/dev/finance/ds_zero2.json
