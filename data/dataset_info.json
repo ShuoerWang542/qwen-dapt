@@ -1,0 +1,8 @@
+{
+  "my_corpus": {
+    "file_name": "my_corpus/train.jsonl",
+    "columns": {
+      "prompt": "text"
+    }
+  }
+}

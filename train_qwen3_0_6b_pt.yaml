@@ -17,13 +17,12 @@ preprocessing_num_workers: 8
 val_size: 0.02
 
 # --- Training ---
-output_dir: /root/dev/finance/output_models/qwen3-0.6b-fullpt
+output_dir: /root/dev/qwen-dapt/output_models/qwen3-0.6b-fullpt
 report_to: tensorboard
-per_device_train_batch_size: 6   # start high on purpose
-# auto_find_batch_size: true
+per_device_train_batch_size: 1   # start high on purpose
 gradient_accumulation_steps: 16
-num_train_epochs: 10           # or use max_steps: 160 as we computed
-learning_rate: 2.0e-4
+num_train_epochs: 2           # or use max_steps: 160 as we computed
+learning_rate: 1.0e-5
 weight_decay: 0.1
 warmup_ratio: 0.05
 lr_scheduler_type: cosine
